@@ -1,2 +1,7 @@
+% P1
 my_last(X,[X]).
+my_last(X,[_|T]):-my_last(X,T).
+
+%P2
+my_last(X,[X,_]).
 my_last(X,[_|T]):-my_last(X,T).
