@@ -55,3 +55,27 @@ remove(E,[H|T],[H|R]):- remove(E,T,R).
 compress([],[]).
 compress([H|T],[H|X]):- remove(H,T,Y), compress(Y,X).
 %and this is more elegant without append
+
+% P9
+make_list(_,[],[],[]).
+make_list(E,[H|T],[H|X],R):- H==E, make_list(E,T,X,R).
+make_list(_,[H|T],[],[R|Z]):- pack([H|T],Y),append([],Y,Z).
+pack([],[]).
+pack([H|T],[Y|R]):- make_list(H,[H|T],Y,R).
+%este insane, am facut random chestia asta care aproape merge
+
+make_list(_,[],[],[]).
+make_list(E,[H|T],[H|X],L):- H==E, make_list(E,T,X,L).
+make_list(_,[H|T],[],[H|T]).
+pack([],[]).
+pack([H|T],[Y|Z]):- make_list(H,[H|T],Y,L),pack(L,Z).
+% o solutie corecta
+
+make_list(_,[],[],[]).
+make_list(E,[H|T],[H|X],L):- H==E, make_list(E,T,X,L).
+make_list(_,[H|T],[],[H|T]).
+pack([],[]).
+pack([H|T],X):- make_list(H,[H|T],Y,L),pack(L,Z),append([Y],Z,X).
+% o alternatva corecta cu append (foarte interesant ca trb sa fii atent la listele de liste,
+% paractic in exemplu anterior a mers pt ca puneam o lista in locul elementului head, presupun)
+% banuiesc ca exista si o solutie mai eleganta, dar atat am putut :))
