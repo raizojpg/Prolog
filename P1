@@ -9,3 +9,23 @@ my_last(X,[_|T]):-my_last(X,T).
 % P3
 element_at(H,[H|_],1).
 element_at(X,[_|T],N):- M is N-1, element_at(X,T,M).
+
+% P4
+nr_elem([],0).
+nr_elem([_|T],N):- nr_elem(T,M), N is M+1.
+
+% P5
+rev([],[]).
+rev([H|T],L):- rev(T,S), append(S,[H],L).
+%append (L1,L2,L3) => L3=L1+L2
+
+% P6
+rev([],[]).
+rev([H|T],L):- rev(T,S), append(S,[H],L).
+palindrome(L):- rev(L,R), L==R.
+% from stackoverflow
+% The = "operator" is actually a predicate that succeeds when the two terms are unified.
+% Thus X = 2 or 2 = X amount to the same thing, a goal to unify X with 2.
+% The == "operator" differs in that it succeeds only if the two terms are already identical without further unification. 
+% Thus X == 2 is true only if the variable X had previously been assigned the value 2.
+
