@@ -29,3 +29,9 @@ palindrome(L):- rev(L,R), L==R.
 % The == "operator" differs in that it succeeds only if the two terms are already identical without further unification. 
 % Thus X == 2 is true only if the variable X had previously been assigned the value 2.
 
+% P7
+flat(H,Y):- is_list(H), flatten(H,Y).
+flat(H,[H]). 
+flatten([],[]).
+flatten([H|T],X):- flat(H,Y), flatten(T,Z), append(Y,Z,X).
+% cred ca mi-a luat o ora+ pana mi-am dat seama de asta :(
