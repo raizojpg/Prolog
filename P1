@@ -35,3 +35,23 @@ flat(H,[H]).
 flatten([],[]).
 flatten([H|T],X):- flat(H,Y), flatten(T,Z), append(Y,Z,X).
 % cred ca mi-a luat o ora+ pana mi-am dat seama de asta :(
+
+% P8
+compress([X],[X]).
+compress([H|T],X):- member(H,T), compress(T,X).
+compress([H|T],X):- compress(T,Y), append([H],Y,X).
+%this solution changes the order of elements so it is not good
+
+remove(_,[],[]).
+remove(E,[H|T],R):- E==H, remove(E,T,R).
+remove(E,[H|T],X):- remove(E,T,R), append([H],R,X).
+compress([],[]).
+compress([H|T],X):- remove(H,T,Y), compress(Y,Z), append([H],Z,X).
+%that s the right one
+
+remove(_,[],[]).
+remove(E,[H|T],R):- E==H, remove(E,T,R).
+remove(E,[H|T],[H|R]):- remove(E,T,R).
+compress([],[]).
+compress([H|T],[H|X]):- remove(H,T,Y), compress(Y,X).
+%and this is more elegant without append
