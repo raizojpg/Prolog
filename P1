@@ -2,6 +2,10 @@
 my_last(X,[X]).
 my_last(X,[_|T]):-my_last(X,T).
 
-%P2
+% P2
 my_last(X,[X,_]).
 my_last(X,[_|T]):-my_last(X,T).
+
+% P3
+element_at(H,[H|_],1).
+element_at(X,[_|T],N):- M is N-1, element_at(X,T,M).
