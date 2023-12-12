@@ -113,3 +113,37 @@ decode_list([],[]).
 decode_list([H|T],Y):- is_list(H),decode_element(H,R),decode_list(T,X),append(R,X,Y).
 decode_list([H|T],[H|X]):- decode_list(T,X). 
 %problem solved with append
+
+% P13 - MISSING
+
+% P14
+duplicate(H,[H,H]).
+dupli([],[]).
+dupli([H|T],X):- duplicate(H,D), dupli(T,Y), append(D,Y,X). 
+
+dupli([],[]).
+dupli([H|T],[H,H|X]):- dupli(T,X). 
+% shorter
+
+% P15
+duplicate(_,0,[]).
+duplicate(H,N,[H|X]):- M is N-1,duplicate(H,M,X).
+dupli([],_,[]).
+dupli([H|T],N,X):- duplicate(H,N,D), dupli(T,N,Y), append(D,Y,X). 
+
+% P16
+drop_count([],_,_,[]).
+drop_count([H|T],I,N,[H|X]):- M is I mod N, M\==0,J is I+1,drop_count(T,J,N,X).
+drop_count([_|T],I,N,X):- J is I+1,drop_count(T,J,N,X).
+drop(L,N,X):-drop_count(L,1,N,X).
+
+% P17
+split([],_,[],[]).
+split([H|T],0,L1,[H|L2]):- split(T,0,L1,L2).
+split([H|T],N,[H|L1],L2):- M is N-1, split(T,M,L1,L2).
+
+% P18
+slice_count([],_,_,_,[]).
+slice_count([H|T],I,A,B,[H|X]):- I >= A, I =< B, J is I+1, slice_count(T,J,A,B,X). 
+slice_count([_|T],I,A,B,X):- J is I+1, slice_count(T,J,A,B,X). 
+slice(L,A,B,X):- slice_count(L,1,A,B,X).
