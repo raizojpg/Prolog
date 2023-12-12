@@ -79,3 +79,37 @@ pack([H|T],X):- make_list(H,[H|T],Y,L),pack(L,Z),append([Y],Z,X).
 % o alternatva corecta cu append (foarte interesant ca trb sa fii atent la listele de liste,
 % paractic in exemplu anterior a mers pt ca puneam o lista in locul elementului head, presupun)
 % banuiesc ca exista si o solutie mai eleganta, dar atat am putut :))
+
+% P10
+letter([H|_],H). 
+count([],[]).
+count([H|T],X):- count(T,R),length(H,N),letter(H,L),append([[N,L]],R,X) .
+encode(L,R):- pack(L,E), count(E,R). 
+
+letter([H|_],H). 
+count([],[]).
+count([H|T],[[N,L]|R]):- length(H,N),letter(H,L),count(T,R) .
+encode(L,R):- pack(L,E), count(E,R). 
+%alternativa fara append
+
+% P11
+letter([H|_],H). 
+count([],[]).
+count([H|T],[[N,L]|R]):- length(H,N),letter(H,L), N\==1, count(T,R).
+count([H|T],[L|R]):- length(H,N),letter(H,L), N==1, count(T,R).
+encode_modified(L,R):- pack(L,E), count(E,R). 
+
+% P12
+decode_element([0,_],[]).
+decode_element([N,E],[E|X]):-M is N-1,decode_element([M,E],X).
+decode_list([],[]).
+decode_list([H|T],[R|X]):- is_list(H),decode_element(H,R),decode_list(T,X).
+decode_list([H|T],[H|X]):- decode_list(T,X). 
+%this decodes the list but the list is still segmented
+
+decode_element([0,_],[]).
+decode_element([N,E],[E|X]):-M is N-1,decode_element([M,E],X).
+decode_list([],[]).
+decode_list([H|T],Y):- is_list(H),decode_element(H,R),decode_list(T,X),append(R,X,Y).
+decode_list([H|T],[H|X]):- decode_list(T,X). 
+%problem solved with append
