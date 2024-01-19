@@ -36,7 +36,7 @@ flatten([],[]).
 flatten([H|T],X):- flat(H,Y), flatten(T,Z), append(Y,Z,X).
 % cred ca mi-a luat o ora+ pana mi-am dat seama de asta :(
 
-% P8
+% P8 Eliminate consecutive duplicates of list elements.
 compress([X],[X]).
 compress([H|T],X):- member(H,T), compress(T,X).
 compress([H|T],X):- compress(T,Y), append([H],Y,X).
@@ -56,7 +56,7 @@ compress([],[]).
 compress([H|T],[H|X]):- remove(H,T,Y), compress(Y,X).
 %and this is more elegant without append
 
-% P9
+% P9 Pack consecutive duplicates of list elements into sublists.
 make_list(_,[],[],[]).
 make_list(E,[H|T],[H|X],R):- H==E, make_list(E,T,X,R).
 make_list(_,[H|T],[],[R|Z]):- pack([H|T],Y),append([],Y,Z).
@@ -80,7 +80,7 @@ pack([H|T],X):- make_list(H,[H|T],Y,L),pack(L,Z),append([Y],Z,X).
 % paractic in exemplu anterior a mers pt ca puneam o lista in locul elementului head, presupun)
 % banuiesc ca exista si o solutie mai eleganta, dar atat am putut :))
 
-% P10
+% P10 Run-length encoding of a list. ?- encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).   X = [[4,a],[1,b],[2,c],[2,a],[1,d][4,e]]
 letter([H|_],H). 
 count([],[]).
 count([H|T],X):- count(T,R),length(H,N),letter(H,L),append([[N,L]],R,X) .
@@ -92,14 +92,14 @@ count([H|T],[[N,L]|R]):- length(H,N),letter(H,L),count(T,R) .
 encode(L,R):- pack(L,E), count(E,R). 
 %alternativa fara append
 
-% P11
+% P11 Modified run-length encoding.
 letter([H|_],H). 
 count([],[]).
 count([H|T],[[N,L]|R]):- length(H,N),letter(H,L), N\==1, count(T,R).
 count([H|T],[L|R]):- length(H,N),letter(H,L), N==1, count(T,R).
 encode_modified(L,R):- pack(L,E), count(E,R). 
 
-% P12
+% P12 Decode a run-length encoded list.
 decode_element([0,_],[]).
 decode_element([N,E],[E|X]):-M is N-1,decode_element([M,E],X).
 decode_list([],[]).
