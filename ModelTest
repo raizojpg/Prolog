@@ -1,0 +1,19 @@
+% P1
+lista_puncte([],_,[]).
+lista_puncte([punct(X,Y)|T],V,[punct(X,Y)|R]):- Y>V,lista_puncte(T,V,R).   
+lista_puncte([_|T],V,R):- lista_puncte(T,V,R).   
+
+% P2
+first(_,0,[]).
+first([H|T],N,[H|R]):- M is N-1, first(T,M,R).
+dropN(L, R, N):- length(L,Len), M is Len - N, M >= 0, first(L,M,R).
+
+% sau dropN(L, R, N) :- append(R, L1, L), length(L1, N).
+
+% P3
+rmdn(non(non(A)),B):- rmdn(A,B).
+rmdn(non(A),non(B)):- rmdn(A,B).
+rmdn(imp(A,C),imp(B,D)):- rmdn(A,B),rmdn(C,D).
+rmdn(sau(A,C),sau(B,D)):- rmdn(A,B),rmdn(C,D).
+rmdn(si(A,C),si(B,D)):- rmdn(A,B),rmdn(C,D).
+rmdn(A,A).
