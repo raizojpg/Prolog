@@ -1,3 +1,0 @@
-rmdn(non(non(X)),X).
-rmdn(non(X),R):= rmdn(X,R).
-rmdn(X,X).
