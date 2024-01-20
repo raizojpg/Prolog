@@ -160,12 +160,12 @@ iterate(X,[H|T],P,I,[H|R]):- P \== I, J is I+1,iterate(X,T,P,J,R).
 iterate(X,[H|T],P,I,[X,H|R]):- J is I+1,iterate(X,T,P,J,R).
 insert_at(X,L,P,R):- iterate(X,L,P,1,R).
 
-% P22
+% P22 Create a list containing all integers within a given range.
 iterate(_,B,B,[B]).
 iterate(A,B,I,[I|L]):- J is I+1,iterate(A,B,J,L).
 range(A,B,L):- iterate(A,B,A,L).
 
-% P23
+% P23 Extract a given number of randomly selected elements from a list.
 iterate(_,[],_,_,[]).
 iterate(X,[H|T],P,I,[H|R]):- P \== I, J is I+1,iterate(X,T,P,J,R).
 iterate(H,[H|T],P,I,R):- J is I+1,iterate(H,T,P,J,R).
