@@ -36,6 +36,11 @@ flatten([],[]).
 flatten([H|T],X):- flat(H,Y), flatten(T,Z), append(Y,Z,X).
 % cred ca mi-a luat o ora+ pana mi-am dat seama de asta :(
 
+my_flatten([],[]).
+my_flatten([H|T],Z):- is_list(H), my_flatten(H,X), my_flatten(T,Y), append(X,Y,Z).
+my_flatten([H|T],[H|Y]):- my_flatten(T,Y).
+% updated
+
 % P8 Eliminate consecutive duplicates of list elements.
 compress([X],[X]).
 compress([H|T],X):- member(H,T), compress(T,X).
