@@ -142,7 +142,12 @@ decode_list([H|T],Y):- is_list(H),decode_element(H,R),decode_list(T,X),append(R,
 decode_list([H|T],[H|X]):- decode_list(T,X). 
 %problem solved with append
 
-% P13 - MISSING
+% P13 
+iterate([],[[N,C]],C,N).
+iterate([H|T],R,C,N):- H==C, M is N+1, iterate(T,R,C,M).
+iterate([H|T],[[N,C]|R],C,N):- iterate([H|T],R,H,0).    
+encode_direct([H|T],R):- iterate([H|T],R,H,0).
+% updated
 
 % P14
 duplicate(H,[H,H]).
