@@ -170,6 +170,12 @@ drop_count([H|T],I,N,[H|X]):- M is I mod N, M\==0,J is I+1,drop_count(T,J,N,X).
 drop_count([_|T],I,N,X):- J is I+1,drop_count(T,J,N,X).
 drop(L,N,X):-drop_count(L,1,N,X).
 
+iterate([],_,_,[]).
+iterate([H|T],N,C,[H|R]):- C\=N, M is C+1, iterate(T,N,M,R).
+iterate([_|T],N,_,R):- iterate(T,N,1,R).
+drop(L,N,R):- iterate(L,N,1,R).
+% updated
+
 % P17
 split([],_,[],[]).
 split([H|T],0,L1,[H|L2]):- split(T,0,L1,L2).
@@ -181,11 +187,29 @@ slice_count([H|T],I,A,B,[H|X]):- I >= A, I =< B, J is I+1, slice_count(T,J,A,B,X
 slice_count([_|T],I,A,B,X):- J is I+1, slice_count(T,J,A,B,X). 
 slice(L,A,B,X):- slice_count(L,1,A,B,X).
 
+iterate([H|_],R,_,R,[H]).
+iterate([_|T],N,L,R,X):- N<L, M is N+1, iterate(T,M,L,R,X).
+iterate([H|T],N,L,R,[H|X]):- M is N+1, iterate(T,M,L,R,X).
+slice(Y,L,R,X):- iterate(Y,1,L,R,X).
+% updated
+
+% P19
+get_factor(_,N,N):- N>=0.
+get_factor(L,N,M):- length(L,X), M is X+N.
+split(T,0,T,[]).
+split([H|T],N,L1,[H|L2]):- M is N-1, split(T,M,L1,L2).
+rotate(L,N,X):- get_factor(L,N,M), split(L,M,L1,L2), append(L1,L2,X).
+% updated
+
 % P20
 iterate(_,[],_,_,[]).
 iterate(X,[H|T],P,I,[H|R]):- P \== I, J is I+1,iterate(X,T,P,J,R).
 iterate(H,[H|T],P,I,R):- J is I+1,iterate(H,T,P,J,R).
 remove_at(X,L,P,R):- iterate(X,L,P,1,R).
+
+remove_at(H,[H|T],1,T).
+remove_at(X,[H|T],N,[H|R]):- M is N-1, remove_at(X,T,M,R).
+% updated
 
 % P21
 iterate(_,[],_,_,[]).
